@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjucloud.credit.dao.UserDAO">
+
+	<resultMap id="userMapper" type="com.bjucloud.credit.domain.User">
+		<result property="id" column="id" />
+		<result property="username" column="username" />
+		<result property="mobile" column="mobile" />
+		<result property="idCard" column="id_card" />
+		<result property="realName" column="realname" />
+		<result property="rhLoginName" column="rh_loginname" />
+		<result property="rhLoginPassword" column="rh_loginpassword"/>
+		<result property="rhMessageCode" column="rh_messagecode" />
+		<result property="insureUserId" column="insure_userid" />
+		<result property="insureStatusId" column="insure_statusid" />
+		<result property="fundUserId" column="fund_userid" />
+		<result property="fundStatusId" column="fund_statusid" />
+		<result property="status" column="status" />
+		<result property="operStatus" column="oper_status"/>
+		<result property="created" column="created" />
+		<result property="modified" column="modified" />
+		<result property="yn" column="yn" />
+	</resultMap>
+
+	<sql id="columns">
+		id,username,mobile,id_card,realname,rh_loginname,rh_loginpassword,rh_messagecode,insure_userid,insure_statusid,fund_userid,fund_statusid,status,oper_status,created,modified,yn
+	</sql>
+
+	<sql id="pagination_tail">
+		limit #{page.pageOffset} , #{page.rows}
+	</sql>
+
+	<!-- 通过id查询用户 -->
+	<select id="queryUserById" resultMap="userMapper">
+		SELECT <include refid="columns"/> FROM user WHERE id = #{id}
+	</select>
+
+	<!-- 查询总数 -->
+	<select id="queryListByConditionCount" resultType="java.lang.Long">
+		select count(id) from user
+		where 1=1
+		<if test="entity.username != null and entity.username != ''">
+			and username = #{entity.username}
+		</if>
+		<if test="entity.mobile != null and entity.mobile != ''">
+			and mobile = #{entity.mobile}
+		</if>
+		<if test="entity.idCard != null and entity.idCard != ''">
+			and id_card = #{entity.idCard}
+		</if>
+		<if test="entity.realName != null and entity.realName != ''">
+			and realname = #{entity.realName}
+		</if>
+		<if test="entity.rhLoginName != null and entity.rhLoginName != ''">
+			and rh_loginname = #{entity.rhLoginName}
+		</if>
+		<if test="entity.rhLoginPassword != null and entity.rhLoginPassword != ''">
+			and rh_loginpassword = #{entity.rhLoginPassword}
+		</if>
+		<if test="entity.rhMessageCode != null and entity.rhMessageCode != ''">
+			and rh_messagecode = #{entity.rhMessageCode}
+		</if>
+		<if test="entity.insureUserId != null and entity.insureUserId != ''">
+			and insure_userid = #{entity.insureUserId}
+		</if>
+		<if test="entity.insureStatusId != null and entity.insureStatusId != ''">
+			and insure_statusid = #{entity.insureStatusId}
+		</if>
+		<if test="entity.fundUserId != null and entity.fundUserId != ''">
+			and fund_userid = #{entity.fundUserId}
+		</if>
+		<if test="entity.fundStatusId != null and entity.fundStatusId != ''">
+			and fund_statusid = #{entity.fundStatusId}
+		</if>
+		<if test="entity.status != null and entity.status != ''">
+			and status = #{entity.status}
+		</if>
+		<if test="entity.yn != null ">
+			and yn = #{entity.yn}
+		</if>
+	</select>
+
+
+	<select id="queryListByCondition" resultMap="userMapper">
+		SELECT <include refid="columns"/> FROM user
+		where 1=1
+		<if test="entity.username != null and entity.username != ''">
+			and username = #{entity.username}
+		</if>
+		<if test="entity.mobile != null and entity.mobile != ''">
+			and mobile = #{entity.mobile}
+		</if>
+		<if test="entity.idCard != null and entity.idCard != ''">
+			and id_card = #{entity.idCard}
+		</if>
+		<if test="entity.realName != null and entity.realName != ''">
+			and realname = #{entity.realName}
+		</if>
+		<if test="entity.rhLoginName != null and entity.rhLoginName != ''">
+			and rh_loginname = #{entity.rhLoginName}
+		</if>
+		<if test="entity.rhLoginPassword != null and entity.rhLoginPassword != ''">
+			and rh_loginpassword = #{entity.rhLoginPassword}
+		</if>
+		<if test="entity.rhMessageCode != null and entity.rhMessageCode != ''">
+			and rh_messagecode = #{entity.rhMessageCode}
+		</if>
+		<if test="entity.insureUserId != null and entity.insureUserId != ''">
+			and insure_userid = #{entity.insureUserId}
+		</if>
+		<if test="entity.insureStatusId != null and entity.insureStatusId != ''">
+			and insure_statusid = #{entity.insureStatusId}
+		</if>
+		<if test="entity.fundUserId != null and entity.fundUserId != ''">
+			and fund_userid = #{entity.fundUserId}
+		</if>
+		<if test="entity.fundStatusId != null and entity.fundStatusId != ''">
+			and fund_statusid = #{entity.fundStatusId}
+		</if>
+		<if test="entity.status != null and entity.status != ''">
+			and status = #{entity.status}
+		</if>
+		<if test="entity.yn != null ">
+			and yn = #{entity.yn}
+		</if>
+		<include refid="pagination_tail" />
+	</select>
+
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO user(
+			username,
+			mobile,
+			id_card,
+			realname,
+			rh_loginname,
+			rh_loginpassword,
+			rh_messagecode,
+			insure_userid,
+			insure_statusid,
+			fund_userid,
+			fund_statusid,
+			status,
+			oper_status,
+			created,
+			modified,
+			yn
+			)VALUES(
+			#{username},
+			#{mobile},
+			#{idCard},
+			#{realName},
+			#{rhLoginName},
+			#{rhLoginPassword},
+			#{rhMessageCode},
+			#{insureUserId},
+			#{insureStatusId},
+			#{fundUserId},
+			#{fundStatusId},
+			#{status},
+			#{operStatus},
+			now(),
+			now(),
+			1
+		)
+	</insert>
+
+	<update id="update">
+		update user
+		<set>
+			<if test="username != null and '' != username">
+				username = #{username},
+			</if>
+			<if test="mobile != null and '' != mobile">
+				mobile = #{mobile},
+			</if>
+			<if test="idCard != null and idCard != ''">
+				id_card = #{idCard},
+			</if>
+			<if test="realName != null and realName != ''">
+				realname = #{realName},
+			</if>
+			<if test="rhLoginName != null and rhLoginName != ''">
+				rh_loginname = #{rhLoginName},
+			</if>
+			<if test="rhLoginPassword != null and rhLoginPassword != ''">
+				rh_loginpassword = #{rhLoginPassword},
+			</if>
+			<if test="rhMessageCode != null and rhMessageCode != ''">
+				rh_messagecode = #{rhMessageCode},
+			</if>
+			<if test="insureUserId != null and insureUserId != ''">
+				insure_userid = #{insureUserId},
+			</if>
+			<if test="insureStatusId != null and insureStatusId != ''">
+				insure_statusid = #{insureStatusId},
+			</if>
+			<if test="fundUserId != null and fundUserId != ''">
+				fund_userid = #{fundUserId},
+			</if>
+			<if test="fundStatusId != null and fundStatusId != ''">
+				fund_statusid = #{fundStatusId},
+			</if>
+			<if test="status != null and '' != status">
+				status = #{status},
+			</if>
+			<if test="operStatus != null and '' != operStatus">
+				oper_status = #{operStatus},
+			</if>
+			modified = now()
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>

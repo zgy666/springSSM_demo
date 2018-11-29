@@ -2,7 +2,7 @@
  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bjucloud.credit.dao.SequenceDAO">
+<mapper namespace="com.demo.dao.SequenceDAO">
 
 	<!-- 生成风控系统交易流水号 -->
 	<select id="getRiskReqSn" resultType="java.lang.String">

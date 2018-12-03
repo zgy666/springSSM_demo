@@ -1,6 +1,7 @@
 package service;
 
 
+import com.demo.common.ExecuteResult;
 
 /**
  * 短信发送服务
